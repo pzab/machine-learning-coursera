@@ -24,9 +24,7 @@ error_val   = zeros(m, 1);
 % ====================== YOUR CODE HERE ======================
 % Instructions: Fill in this function to return training errors in 
 %               error_train and the cross validation errors in error_val. 
-%               The vector numex_vec contains the number of training 
-%               examples to use for each calculation of training error and 
-%               cross validation error, i.e, error_train(i) and 
+%               i.e., error_train(i) and 
 %               error_val(i) should give you the errors
 %               obtained after training on i examples.
 %
@@ -55,33 +53,17 @@ error_val   = zeros(m, 1);
 
 % ---------------------- Sample Solution ----------------------
 
-for i=1:m
-	[theta]=trainLinearReg(X(1:i,:), y(1:i), lambda);
-	[e_train]=linearRegCostFunction(X(1:i,:), y(1:i), theta, lambda);
-	[e_val]=linearRegCostFunction(Xval, yval, theta, lambda);	% J over all CV set for new set of theta
 
-% Accumulating error from i=1:m
-	if (i==1)
-		error_train=e_train;
-		error_val=e_val;
-	else
-		error_train=[error_train; e_train];
-		error_val=[error_val; e_val];
-	end
+for ii = 1:m
+  
+  theta = trainLinearReg(X(1:ii,:), y(1:ii,:), lambda);
+  h = X(1:ii, :)*theta;
+  error_train(ii)=(1/(2*ii))*sum((h-y(1:ii,:)).^2);
+  h=Xval*theta;
+  error_val(ii)=(1/(2*m))*sum((h-yval).^2);
+  
 end
 
-% Above methods are not accepted when submitted, following method are
-%for ii=1:m
-%theta = trainLinearReg(X(1:ii,:), y(1:ii,:), lambda);
-
-% For training set
-%h=X(1:ii,:)*theta;
-%error_train(ii)=(1/(2*ii))*sum((h-y(1:ii,:)).^2);
-
-% For CV set
-%h=Xval*theta;
-%error_val(ii)=(1/(2*m))*sum((h-yval).^2);
-%end
 % -------------------------------------------------------------
 
 % =========================================================================

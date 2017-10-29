@@ -101,7 +101,7 @@ pause;
 %  Next, you should implement the learningCurve function. 
 %
 %  Write Up Note: Since the model is underfitting the data, we expect to
-%                 see a graph with "high bias" -- slide 8 in ML-advice.pdf 
+%                 see a graph with "high bias" -- Figure 3 in ex5.pdf 
 %
 
 lambda = 0;
@@ -164,7 +164,7 @@ pause;
 %  lambda to see how the fit and learning curve change.
 %
 
-lambda = 1;
+lambda = 0;
 [theta] = trainLinearReg(X_poly, y, lambda);
 
 % Plot training data and fit
@@ -218,28 +218,3 @@ end
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
-
-%% =========== Part 9: Test error =============
-%  compute the test error using the best value of lambda you found. 
-% In our cross validation, we obtained a test error of 3.8599 for lambda = 3
-
-[lambda_vec, error_train, error_test] = ...
-    validationCurve(X_poly, y, X_poly_test, ytest);
-
-close all;
-plot(lambda_vec, error_train, lambda_vec, error_val, lambda_vec, error_test);
-legend('Train', 'CrossValidation','Test');
-xlabel('lambda');
-ylabel('Error');
-
-fprintf('lambda\t\tTrain Error\tCross Validation Error\tTest Error\n');
-for i = 1:length(lambda_vec)
-	fprintf(' %f\t%f\t%f\t%f\n', ...
-            lambda_vec(i), error_train(i), error_val(i), error_test(i));
-end
-
-fprintf('Program paused. Press enter to continue.\n');
-pause;
-
-% === Part 10: Randomly choosing samples for training, CV ============
-% Not completed. Refer to exercise brief. 
